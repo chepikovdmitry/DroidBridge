@@ -60,3 +60,7 @@ swift build
 swift test
 .build/debug/droidbridge-usb --help
 ```
+
+## Licence
+
+Le code de DroidBridge est distribué sous [licence MIT](LICENSE). La [dépendance libmtp](https://formulae.brew.sh/formula/libmtp) est distribuée séparément sous LGPL-2.1-or-later.

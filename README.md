@@ -84,3 +84,7 @@ shasum -a 256 droidbridge-usb-check.txt droidbridge-usb-returned.txt
 For more coverage, repeat with a filename containing Unicode and a file larger than 4 GiB. Test Ctrl+C and a cable disconnect in both directions. On Ctrl+C, a download lets the USB exchange finish and removes the temporary file. An upload already underway is allowed to finish. Immediate cancellation through libmtp left the MTP session unresponsive on the Samsung test device.
 
 Failed downloads remove the temporary copy and preserve an existing destination file. A failed upload may leave a partial file on the phone. Reconnect and refresh the destination folder to check its contents before retrying. If the Samsung is detected over USB but its storage is unavailable, try switching from Photo transfer back to File transfer.
+
+## License
+
+DroidBridge source code is released under the [MIT License](LICENSE). The [libmtp dependency](https://formulae.brew.sh/formula/libmtp) is licensed separately under LGPL-2.1-or-later.

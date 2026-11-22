@@ -60,3 +60,7 @@ swift build
 swift test
 .build/debug/droidbridge-usb --help
 ```
+
+## ライセンス
+
+DroidBridge のソースコードは [MIT ライセンス](LICENSE)で公開されています。依存ライブラリの [libmtp](https://formulae.brew.sh/formula/libmtp) には別途 LGPL-2.1-or-later が適用されます。

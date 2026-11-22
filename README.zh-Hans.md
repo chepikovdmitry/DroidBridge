@@ -60,3 +60,7 @@ swift build
 swift test
 .build/debug/droidbridge-usb --help
 ```
+
+## 许可证
+
+DroidBridge 源代码采用 [MIT 许可证](LICENSE)。[依赖库 libmtp](https://formulae.brew.sh/formula/libmtp) 单独采用 LGPL-2.1-or-later 许可证。
