@@ -1,3 +1,4 @@
+import DroidBridgeCore
 import SwiftUI
 
 struct TransferRow: View {
@@ -11,7 +12,7 @@ struct TransferRow: View {
                 .font(.system(size: 13, weight: .medium))
                 .foregroundStyle(.secondary)
                 .frame(width: 20)
-                .accessibilityLabel(job.source.toMac ? "На Mac" : "На Android")
+                .accessibilityLabel(job.source.toMac ? L10n.text("To Mac") : L10n.text("To Android"))
             VStack(alignment: .leading, spacing: 4) {
                 Text(job.source.name)
                     .font(.subheadline.weight(.medium))
@@ -28,7 +29,7 @@ struct TransferRow: View {
                 if let fraction = job.progress {
                     ProgressView(value: fraction)
                         .frame(width: 92)
-                        .accessibilityLabel("Прогресс передачи")
+                        .accessibilityLabel(L10n.text("Transfer progress"))
                 } else {
                     ProgressView().controlSize(.small)
                 }
@@ -37,10 +38,10 @@ struct TransferRow: View {
             case .failed:
                 Image(systemName: "exclamationmark.circle").foregroundStyle(.orange)
             case .conflict:
-                Button("Пропустить", action: cancel)
+                Button(L10n.text("Skip"), action: cancel)
                     .buttonStyle(.borderless)
                     .controlSize(.small)
-                Button("Сохранить копию", action: keepBoth)
+                Button(L10n.text("Keep Both"), action: keepBoth)
                     .buttonStyle(.borderless)
                     .controlSize(.small)
             case .queued, .cancelled, .skipped:
@@ -55,7 +56,7 @@ struct TransferRow: View {
                         Image(systemName: "xmark.circle").imageScale(.medium)
                     }
                     .buttonStyle(.plain)
-                    .accessibilityLabel("Отменить передачу")
+                    .accessibilityLabel(L10n.text("Cancel transfer"))
                 }
             }
         }
@@ -67,13 +68,13 @@ struct TransferRow: View {
 
     private var detail: String {
         switch job.state {
-        case .queued: "Ожидает передачи"
-        case .copying: job.currentName.map { "Копируется: \($0)" } ?? "Подготовка к копированию"
-        case .waitingToCancel: "Отмена после завершения текущего обмена по USB"
-        case .conflict: "Это имя уже занято в папке назначения"
-        case .completed: "Скопировано"
-        case .skipped: "Пропущено: имя уже занято"
-        case .cancelled: "Отменено"
+        case .queued: L10n.text("Waiting to transfer")
+        case .copying: job.currentName.map { L10n.text("Copying: %@", $0) } ?? L10n.text("Preparing to copy")
+        case .waitingToCancel: L10n.text("Cancelling after the current USB operation finishes")
+        case .conflict: L10n.text("This name already exists in the destination")
+        case .completed: L10n.text("Copied")
+        case .skipped: L10n.text("Skipped: name already exists")
+        case .cancelled: L10n.text("Cancelled")
         case .failed(let message): message
         }
     }

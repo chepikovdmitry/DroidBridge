@@ -31,7 +31,7 @@ struct FolderPage: Sendable {
 
 struct TransferConflict: LocalizedError {
     let name: String
-    var errorDescription: String? { "Объект «\(name)» уже есть в папке назначения." }
+    var errorDescription: String? { L10n.text("“%@” is already in the destination folder.", name) }
 }
 
 enum TransferSource: Sendable {
@@ -130,7 +130,7 @@ final class TransferEngine: @unchecked Sendable {
             engine.thumbnails.removeAllObjects()
             return try MTPSession.withDevices { devices in
                 guard !devices.isEmpty, let raw = devices.baseAddress else { return nil }
-                guard devices.count == 1 else { throw USBError("Подключите один Android по USB.") }
+                guard devices.count == 1 else { throw USBError(L10n.text("Connect one Android device over USB.")) }
                 let native = try MTPSession(rawDevice: raw)
                 let storages = try native.storages().map {
                     PhoneStorage(id: $0.id, name: $0.name, freeBytes: $0.freeBytes)
@@ -278,7 +278,7 @@ final class TransferEngine: @unchecked Sendable {
 
     private func connected(_ id: UUID) throws -> MTPSession {
         guard connection?.id == id, let session else {
-            throw USBError("Телефон был переподключён. Выберите файлы для передачи заново.")
+            throw USBError(L10n.text("The phone was reconnected. Select the files again."))
         }
         return session
     }
@@ -316,7 +316,7 @@ private struct CopyOperation {
         let name = try targetName(entry.name, batch.names, isFolder: entry.isFolder, keepBoth: keepBoth)
         guard batch.childIDs.contains(entry.id),
               try session.entryMatches(entry, storage: batch.folder.storage, folder: batch.folder.id) else {
-            throw USBError("Объект на телефоне изменился. Обновите папку и выберите его заново.")
+            throw USBError(L10n.text("The item on the phone changed. Refresh the folder and select it again."))
         }
         let target = batch.destination.appending(path: name)
         do {
@@ -330,7 +330,7 @@ private struct CopyOperation {
     }
 
     private func targetName(_ requested: String, _ names: TransferName.Index, isFolder: Bool, keepBoth: Bool) throws -> String {
-        guard TransferName.isComponent(requested) else { throw USBError("Недопустимое имя файла или папки.") }
+        guard TransferName.isComponent(requested) else { throw USBError(L10n.text("Invalid file or folder name.")) }
         let available = names.available(requested, isFolder: isFolder)
         guard keepBoth || available == requested else { throw TransferConflict(name: requested) }
         return available
@@ -356,7 +356,7 @@ private struct CopyOperation {
     private func download(_ entry: MTPSession.Entry, storage: UInt32, to target: URL, ancestors: Set<UInt32>) throws {
         try control.check()
         guard TransferName.isComponent(entry.name), !ancestors.contains(entry.id) else {
-            throw USBError("Телефон вернул недопустимое имя или цикл папок.")
+            throw USBError(L10n.text("The phone returned an invalid name or a folder loop."))
         }
         guard entry.isFolder else {
             try session.pull(object: entry.id, to: target, progress: reporting(entry.name)) { control.isCancelled }
@@ -376,13 +376,13 @@ private struct CopyOperation {
         progress(entry.name, nil)
         var names: [String] = []
         for child in try session.entries(storage: storage, folder: entry.id) {
-            guard TransferName.isComponent(child.name) else { throw USBError("Недопустимое имя файла на телефоне.") }
+            guard TransferName.isComponent(child.name) else { throw USBError(L10n.text("Invalid filename on the phone.")) }
             let name = TransferName.available(child.name, among: names, isFolder: child.isFolder)
             do {
                 try download(child, storage: storage, to: temporary.appending(path: name),
                              ancestors: ancestors.union([entry.id]))
             } catch let error as POSIXError where error.code == .EEXIST {
-                throw USBError("Не удалось выбрать свободное имя для «\(child.name)» внутри папки.")
+                throw USBError(L10n.text("Could not find an unused name for “%@” in the folder.", child.name))
             }
             names.append(name)
         }
@@ -402,7 +402,7 @@ private struct CopyOperation {
         let values = try url.resourceValues(forKeys: keys)
         guard values.isSymbolicLink != true, values.isReadable == true,
               values.isRegularFile == true || values.isDirectory == true else {
-            throw USBError("Не удаётся прочитать «\(url.lastPathComponent)» как обычный файл или папку.")
+            throw USBError(L10n.text("Could not read “%@” as a regular file or folder.", url.lastPathComponent))
         }
         guard values.isDirectory == true else { return LocalCopyItem(url: url, children: nil) }
         let urls = try FileManager.default.contentsOfDirectory(at: url, includingPropertiesForKeys: Array(keys))

@@ -1,3 +1,4 @@
+import DroidBridgeCore
 import AppKit
 import SwiftUI
 import UniformTypeIdentifiers
@@ -16,11 +17,14 @@ struct DroidBridgeApp: App {
         .windowResizability(.contentMinSize)
         .commands {
             CommandGroup(after: .newItem) {
-                Button("Выбрать папку на Mac…", action: model.chooseMacFolder)
+                Button(L10n.text("Choose Mac Folder…"), action: model.chooseMacFolder)
                     .keyboardShortcut("o")
-                Button("Обновить") { Task { await model.refresh() } }
+                Button(L10n.text("Refresh")) { Task { await model.refresh() } }
                     .keyboardShortcut("r")
             }
+        }
+        Settings {
+            SettingsView()
         }
     }
 }
@@ -66,14 +70,14 @@ struct BrowserWindow: View {
 
             VStack(alignment: .leading, spacing: 2) {
                 Text("DroidBridge").font(.system(size: 24, weight: .semibold))
-                Text("Передача файлов по USB").font(.subheadline).foregroundStyle(.secondary)
+                Text(L10n.text("USB file transfer")).font(.subheadline).foregroundStyle(.secondary)
             }
             Spacer()
             HStack(spacing: 7) {
                 Circle()
                     .fill(model.connection != nil ? Color.bridgeAccent : Color.secondary.opacity(0.55))
                     .frame(width: 7, height: 7)
-                Text(model.connection != nil ? "USB подключён" : "USB не подключён")
+                Text(model.connection != nil ? L10n.text("USB connected") : L10n.text("USB disconnected"))
                     .font(.subheadline.weight(.medium))
             }
             .padding(.horizontal, 12)
@@ -84,16 +88,23 @@ struct BrowserWindow: View {
             } label: {
                 Image(systemName: "arrow.clockwise").frame(width: 24, height: 24)
             }
-            .help("Обновить папки (⌘R)")
-            .accessibilityLabel("Обновить папки")
+            .help(L10n.text("Refresh folders (⌘R)"))
+            .accessibilityLabel(L10n.text("Refresh folders"))
+
+            SettingsLink {
+                Label(L10n.text("Settings"), systemImage: "gearshape")
+                    .labelStyle(.iconOnly)
+                    .frame(width: 24, height: 24)
+            }
+            .help(L10n.text("Settings"))
         }
     }
 
     private var macPanel: some View {
         FilePanel(
-            title: "Mac", subtitle: "Локальные файлы", icon: "desktopcomputer",
+            title: "Mac", subtitle: L10n.text("Local files"), icon: "desktopcomputer",
             path: model.macFolder.path(percentEncoded: false), items: model.macItems, selection: $model.macSelection,
-            dropTarget: macDropTarget, error: model.macError, emptyReason: "В этой папке пока пусто.",
+            dropTarget: macDropTarget, error: model.macError, emptyReason: L10n.text("This folder is empty."),
             loadingMessage: nil, loadingProgress: nil, canGoUp: model.macFolder.path != "/",
             goUp: { model.openMac(model.macFolder.deletingLastPathComponent()) },
             open: { item in
@@ -105,7 +116,7 @@ struct BrowserWindow: View {
             }
         ) {
             Button(action: model.chooseMacFolder) {
-                Label("Выбрать папку", systemImage: "folder")
+                Label(L10n.text("Choose Folder"), systemImage: "folder")
                     .labelStyle(.titleAndIcon)
             }
             .controlSize(.small)
@@ -119,15 +130,15 @@ struct BrowserWindow: View {
 
     private var phonePanel: some View {
         FilePanel(
-            title: "Android", subtitle: model.connection?.name ?? "USB-устройство", icon: "smartphone",
+            title: "Android", subtitle: model.connection?.name ?? L10n.text("USB device"), icon: "smartphone",
             path: model.phonePath.map(\.name).joined(separator: " / "),
             items: model.phoneItems, selection: $model.phoneSelection,
             dropTarget: phoneDropTarget && model.phoneFolder != nil, error: model.phoneError,
             emptyReason: model.connection == nil
-                ? "Разблокируйте телефон и выберите на нём «Передача файлов»."
-                : "В этой папке пока пусто.",
+                ? L10n.text("Unlock your phone and select File transfer.")
+                : L10n.text("This folder is empty."),
             loadingMessage: phoneLoadingMessage,
-            loadingProgress: model.phoneEntryCount.map { "Загружено \(model.phoneItems.count) из \($0)" },
+            loadingProgress: model.phoneEntryCount.map { L10n.text("Loaded %@ of %@", model.phoneItems.count.formatted(), $0.formatted()) },
             canGoUp: model.phonePath.count > 1 && model.phoneNavigationAllowed,
             goUp: { Task { await model.phoneUp() } },
             open: { item in Task { await model.openPhone(item) } },
@@ -139,11 +150,11 @@ struct BrowserWindow: View {
             preview: phonePreview
         ) {
             Toggle(isOn: $model.showPhonePreviews) {
-                Label("Превью", systemImage: "photo")
+                Label(L10n.text("Previews"), systemImage: "photo")
             }
             .toggleStyle(.button)
             .controlSize(.small)
-            .help("Показывать миниатюры фото и видео")
+            .help(L10n.text("Show photo and video thumbnails"))
             Menu {
                 if let storages = model.connection?.storages {
                     ForEach(storages) { storage in
@@ -151,9 +162,9 @@ struct BrowserWindow: View {
                     }
                     Divider()
                 }
-                Button("Подключить заново") { Task { await model.connect() } }
+                Button(L10n.text("Reconnect")) { Task { await model.connect() } }
             } label: {
-                Label("Устройство", systemImage: "externaldrive")
+                Label(L10n.text("Device"), systemImage: "externaldrive")
             }
             .controlSize(.small)
             .disabled(!model.phoneNavigationAllowed)
@@ -182,9 +193,9 @@ struct BrowserWindow: View {
     private var phoneLoadingMessage: String? {
         if model.phoneEntryCount != nil { return nil }
         if let folder = model.loadingPhoneFolder {
-            return "Загружаем папку «\(folder)»…"
+            return L10n.text("Loading “%@”…", folder)
         }
-        return model.connecting ? "Подключаем телефон…" : nil
+        return model.connecting ? L10n.text("Connecting to phone…") : nil
     }
 
     private var copyActions: some View {
@@ -196,8 +207,8 @@ struct BrowserWindow: View {
             }
             .buttonStyle(.borderedProminent)
             .disabled(model.phoneFolder == nil || model.readingPhone || model.selectedMac.isEmpty)
-            .accessibilityLabel("Копировать на Android")
-            .help("Копировать выбранное на Android")
+            .accessibilityLabel(L10n.text("Copy to Android"))
+            .help(L10n.text("Copy selected items to Android"))
 
             Button {
                 model.download(ids: model.selectedPhone.map(\.id))
@@ -205,8 +216,8 @@ struct BrowserWindow: View {
                 Image(systemName: "arrow.left").frame(width: 31, height: 27)
             }
             .disabled(model.readingPhone || model.selectedPhone.isEmpty)
-            .accessibilityLabel("Копировать на Mac")
-            .help("Копировать выбранное на Mac")
+            .accessibilityLabel(L10n.text("Copy to Mac"))
+            .help(L10n.text("Copy selected items to Mac"))
         }
         .font(.system(size: 14, weight: .semibold))
         .controlSize(.large)
@@ -225,7 +236,7 @@ private struct TransferQueuePanel: View {
                     showTransfers.toggle()
                 } label: {
                     Label(
-                        "Очередь передач",
+                        L10n.text("Transfer Queue"),
                         systemImage: showTransfers ? "chevron.down" : "chevron.right"
                     )
                     .font(.subheadline.weight(.semibold))
@@ -242,7 +253,7 @@ private struct TransferQueuePanel: View {
                 }
                 Spacer()
                 if model.jobs.count > pending {
-                    Button("Очистить завершённые", action: model.clearFinished)
+                    Button(L10n.text("Clear Finished"), action: model.clearFinished)
                         .controlSize(.small)
                 }
             }
@@ -253,18 +264,18 @@ private struct TransferQueuePanel: View {
                 row(for: job)
                     .background(Color.bridgeAccent.opacity(0.07))
                     .accessibilityElement(children: .contain)
-                    .accessibilityLabel("Текущая передача")
+                    .accessibilityLabel(L10n.text("Current transfer"))
             }
             if let job = model.downloadConflict {
                 Divider()
                 HStack(spacing: 9) {
-                    Text("Уже есть на Mac: \(job.source.name)")
+                    Text(L10n.text("Already on the Mac: %@", job.source.name))
                         .lineLimit(1)
                         .truncationMode(.middle)
                     Spacer(minLength: 4)
-                    Button("Пропустить", action: { model.cancel(job.id) })
-                    Button("Сохранить копию", action: { model.keepBoth(job.id) })
-                    Button("Пропускать совпадения в пачке", action: { model.skipDownloadConflicts(job.id) })
+                    Button(L10n.text("Skip"), action: { model.cancel(job.id) })
+                    Button(L10n.text("Keep Both"), action: { model.keepBoth(job.id) })
+                    Button(L10n.text("Skip all conflicts in this batch"), action: { model.skipDownloadConflicts(job.id) })
                         .buttonStyle(.borderedProminent)
                 }
                 .controlSize(.small)
@@ -274,7 +285,7 @@ private struct TransferQueuePanel: View {
             if showTransfers {
                 Divider()
                 if model.jobs.isEmpty {
-                    Text("Выберите файлы в любой панели или перетащите их в соседнюю.")
+                    Text(L10n.text("Select files in either pane or drag them to the other pane."))
                         .font(.subheadline)
                         .foregroundStyle(.secondary)
                         .padding(.horizontal, 14)

@@ -1,3 +1,4 @@
+import DroidBridgeCore
 import SwiftUI
 
 private enum FileColumn: CaseIterable {
@@ -5,10 +6,10 @@ private enum FileColumn: CaseIterable {
 
     var heading: String {
         switch self {
-        case .name: "Имя"
-        case .type: "Тип"
-        case .size: "Размер"
-        case .date: "Изменён"
+        case .name: L10n.text("Name")
+        case .type: L10n.text("Type")
+        case .size: L10n.text("Size")
+        case .date: L10n.text("Modified")
         }
     }
 
@@ -26,9 +27,9 @@ private enum FileColumn: CaseIterable {
 
 private extension BrowserItem {
     var typeName: String {
-        if isFolder { return "Папка" }
+        if isFolder { return L10n.text("Folder") }
         let ext = (name as NSString).pathExtension
-        return ext.isEmpty ? "Файл" : ext.uppercased()
+        return ext.isEmpty ? L10n.text("File") : ext.uppercased()
     }
 }
 
@@ -85,9 +86,9 @@ struct FilePanel<Trailing: View>: View {
                         .frame(width: 19, height: 17)
                 }
                 .disabled(!canGoUp)
-                .accessibilityLabel("На уровень выше")
-                .help("На уровень выше")
-                Text(path.isEmpty ? "Хранилище" : path)
+                .accessibilityLabel(L10n.text("Up one level"))
+                .help(L10n.text("Up one level"))
+                Text(path.isEmpty ? L10n.text("Storage") : path)
                     .font(.system(.caption, design: .monospaced))
                     .foregroundStyle(.secondary)
                     .lineLimit(1)
@@ -129,11 +130,11 @@ struct FilePanel<Trailing: View>: View {
                     ProgressView().controlSize(.mini).accessibilityHidden(true)
                     Text(loadingProgress)
                 } else {
-                    Text("Объектов \(items.count.formatted())")
+                    Text(L10n.text("Items: %@", items.count.formatted()))
                 }
                 Spacer()
                 if !selection.isEmpty {
-                    Text("Выбрано \(selection.count.formatted())")
+                    Text(L10n.text("Selected: %@", selection.count.formatted()))
                 }
             }
             .font(.caption)
@@ -192,7 +193,7 @@ struct FilePanel<Trailing: View>: View {
                     .listRowInsets(EdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 16))
                     .contentShape(Rectangle())
                     .draggable(drag(item))
-                    .accessibilityAction(named: Text("Открыть папку")) {
+                    .accessibilityAction(named: Text(L10n.text("Open Folder"))) {
                         if item.isFolder { open(item) }
                     }
             }
@@ -200,7 +201,7 @@ struct FilePanel<Trailing: View>: View {
             .scrollContentBackground(.hidden)
             .contextMenu(forSelectionType: String.self) { ids in
                 if let folder = selectedFolder(in: ids) {
-                    Button("Открыть папку") { open(folder) }
+                    Button(L10n.text("Open Folder")) { open(folder) }
                 }
             } primaryAction: { ids in
                 if let folder = selectedFolder(in: ids) {
@@ -239,8 +240,8 @@ struct FilePanel<Trailing: View>: View {
             .contentShape(Rectangle())
         }
         .buttonStyle(.plain)
-        .accessibilityValue(sortColumn == column ? (ascending ? "По возрастанию" : "По убыванию") : "")
-        .help("Сортировать по столбцу «\(column.heading)»")
+        .accessibilityValue(sortColumn == column ? (ascending ? L10n.text("Ascending") : L10n.text("Descending")) : "")
+        .help(L10n.text("Sort by “%@”", column.heading))
     }
 
     private func sortItems() {

@@ -3,6 +3,7 @@ import PackageDescription
 
 let package = Package(
     name: "DroidBridge",
+    defaultLocalization: "en",
     platforms: [.macOS("26.0")],
     products: [
         .executable(name: "droidbridge-usb", targets: ["DroidBridgeUSB"]),
@@ -14,7 +15,7 @@ let package = Package(
             pkgConfig: "libmtp",
             providers: [.brew(["libmtp", "pkgconf"])]
         ),
-        .target(name: "DroidBridgeCore"),
+        .target(name: "DroidBridgeCore", resources: [.process("Resources")]),
         .target(name: "DroidBridgeMTP", dependencies: ["DroidBridgeCore", "CLibMTP"]),
         .executableTarget(name: "DroidBridgeUSB", dependencies: ["DroidBridgeMTP", "CLibMTP"]),
         .executableTarget(name: "DroidBridgeApp", dependencies: ["DroidBridgeCore", "DroidBridgeMTP"]),

@@ -43,7 +43,7 @@ public enum DownloadFile {
         let actualBytes: Int64
 
         var errorDescription: String? {
-            "Downloaded \(actualBytes) bytes. Expected \(expectedBytes) bytes."
+            L10n.text("Downloaded %@ bytes. Expected %@ bytes.", String(actualBytes), String(expectedBytes))
         }
     }
 }

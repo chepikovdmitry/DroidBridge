@@ -1,3 +1,4 @@
+import DroidBridgeCore
 import AppKit
 import DroidBridgeMTP
 import Observation
@@ -120,7 +121,7 @@ final class BrowserModel {
 
     func chooseMacFolder() {
         let chooser = NSOpenPanel()
-        chooser.title = "Папка на Mac"
+        chooser.title = L10n.text("Mac Folder")
         chooser.canChooseDirectories = true
         chooser.canChooseFiles = false
         chooser.allowsMultipleSelection = false

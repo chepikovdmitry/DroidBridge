@@ -21,7 +21,7 @@ package final class MTPSession {
     }
 
     package static let root = UInt32.max
-    package static let noDevice = "No MTP device found. Unlock your Android phone and select File transfer over USB."
+    package static let noDevice = L10n.text("No MTP device found. Unlock your Android phone and select File transfer over USB.")
     private let device: UnsafeMutablePointer<LIBMTP_mtpdevice_t>
 
     private static let initialized: Void = { LIBMTP_Init() }()
@@ -38,14 +38,14 @@ package final class MTPSession {
             return try run(.init(start: nil, count: 0))
         }
         guard status == LIBMTP_ERROR_NONE else {
-            throw USBError("USB device detection failed (libmtp code \(status.rawValue)).")
+            throw USBError(L10n.text("USB device detection failed (libmtp code %@).", String(status.rawValue)))
         }
         return try run(.init(start: devices, count: Int(count)))
     }
 
     package init(rawDevice: UnsafeMutablePointer<LIBMTP_raw_device_t>) throws {
         guard let device = LIBMTP_Open_Raw_Device_Uncached(rawDevice) else {
-            throw USBError("Could not open the MTP session. Unlock the phone, close other MTP apps, and reconnect the cable.")
+            throw USBError(L10n.text("Could not open the MTP session. Unlock the phone, close other MTP apps, and reconnect the cable."))
         }
         self.device = device
     }
@@ -57,12 +57,12 @@ package final class MTPSession {
     package func storages() throws -> [(id: UInt32, name: String, freeBytes: UInt64)] {
         // libmtp reads the storage list when opening this command's session.
         guard device.pointee.storage != nil else {
-            throw failure("Could not read storages. Unlock the phone and allow file access.")
+            throw failure(L10n.text("Could not read storages. Unlock the phone and allow file access."))
         }
         var result: [(UInt32, String, UInt64)] = []
         var node = device.pointee.storage
         while let storage = node?.pointee {
-            let name = storage.StorageDescription.map { String(cString: $0) } ?? "Unnamed storage"
+            let name = storage.StorageDescription.map { String(cString: $0) } ?? L10n.text("Unnamed storage")
             result.append((storage.id, name, storage.FreeSpaceInBytes))
             node = storage.next
         }
@@ -108,7 +108,7 @@ package final class MTPSession {
 
     private func entry(from file: LIBMTP_file_t) throws -> Entry {
         guard let filename = file.filename else {
-            throw USBError("MTP object \(file.item_id) has no filename.")
+            throw USBError(L10n.text("MTP object %@ has no filename.", String(file.item_id)))
         }
         return Entry(
             id: file.item_id,
@@ -127,22 +127,22 @@ package final class MTPSession {
     ) throws -> Result {
         if folder == Self.root {
             guard try storages().contains(where: { $0.id == storage }) else {
-                throw USBError("The selected MTP storage is unavailable. Refresh the storage list.")
+                throw USBError(L10n.text("The selected MTP storage is unavailable. Refresh the storage list."))
             }
         } else {
             let parent = try metadata(for: folder)
             defer { LIBMTP_destroy_file_t(parent) }
             guard parent.pointee.filetype == LIBMTP_FILETYPE_FOLDER, parent.pointee.storage_id == storage else {
-                throw USBError("The folder does not belong to the selected storage.")
+                throw USBError(L10n.text("The folder does not belong to the selected storage."))
             }
         }
 
         LIBMTP_Clear_Errorstack(device)
         var children: UnsafeMutablePointer<UInt32>?
         let count = LIBMTP_Get_Children(device, storage, folder, &children)
-        guard count >= 0 else { throw failure("Could not list the folder.") }
+        guard count >= 0 else { throw failure(L10n.text("Could not list the folder.")) }
         guard count > 0 else { return try read(.init(start: nil, count: 0)) }
-        guard let children else { throw USBError("The device returned no folder entries.") }
+        guard let children else { throw USBError(L10n.text("The device returned no folder entries.")) }
         defer { free(children) }
 
         return try read(UnsafeBufferPointer(start: children, count: Int(count)))
@@ -170,7 +170,7 @@ package final class MTPSession {
         let info = try metadata(for: object)
         defer { LIBMTP_destroy_file_t(info) }
         guard info.pointee.filetype != LIBMTP_FILETYPE_FOLDER else {
-            throw USBError("Pull requires a file object ID.")
+            throw USBError(L10n.text("Pull requires a file object ID."))
         }
         try DownloadFile.write(to: destination, expectedBytes: info.pointee.filesize) { file in
             try reporting(progress) { callback, context in
@@ -178,7 +178,7 @@ package final class MTPSession {
                 let status = LIBMTP_Get_File_To_File_Descriptor(
                     device, object, file.fileDescriptor, callback, context
                 )
-                guard status == 0 else { throw failure("Download failed.") }
+                guard status == 0 else { throw failure(L10n.text("Download failed.")) }
             }
             if discard() { throw CancellationError() }
         }
@@ -200,20 +200,20 @@ package final class MTPSession {
         guard fstat(descriptor, &info) == 0,
               (info.st_mode & S_IFMT) == S_IFREG,
               let bytes = UInt64(exactly: info.st_size) else {
-            throw USBError("Push requires a readable regular file.")
+            throw USBError(L10n.text("Push requires a readable regular file."))
         }
 
         let name = targetName ?? source.lastPathComponent
         try validateName(name)
         let existing = try entries(storage: storage, folder: folder)
         guard !existing.contains(where: { $0.name.caseInsensitiveCompare(name) == .orderedSame }) else {
-            throw USBError("The destination already contains \(name). Rename the source before retrying.")
+            throw USBError(L10n.text("The destination already contains %@. Rename the source before retrying.", name))
         }
         guard let file = LIBMTP_new_file_t() else {
-            throw USBError("Could not allocate MTP file metadata.")
+            throw USBError(L10n.text("Could not allocate MTP file metadata."))
         }
         defer { LIBMTP_destroy_file_t(file) }
-        guard let filename = strdup(name) else { throw USBError("Could not allocate the MTP filename.") }
+        guard let filename = strdup(name) else { throw USBError(L10n.text("Could not allocate the MTP filename.")) }
         file.pointee.filename = filename
         file.pointee.filesize = bytes
         file.pointee.filetype = LIBMTP_FILETYPE_UNKNOWN
@@ -227,7 +227,7 @@ package final class MTPSession {
                 device, droidbridge_read_upload, &sourceDescriptor, file, callback, context
             )
             guard status == 0 else {
-                throw failure("Upload failed. Check the destination on the phone for a partial file before retrying.")
+                throw failure(L10n.text("Upload failed. Check the destination on the phone for a partial file before retrying."))
             }
         }
         return file.pointee.item_id
@@ -237,27 +237,27 @@ package final class MTPSession {
         try validateName(name)
         let existing = try entries(storage: storage, folder: parent)
         guard !existing.contains(where: { $0.name.caseInsensitiveCompare(name) == .orderedSame }) else {
-            throw USBError("The destination already contains \(name).")
+            throw USBError(L10n.text("The destination already contains %@.", name))
         }
         LIBMTP_Clear_Errorstack(device)
         var filename = name.utf8CString
         let id = filename.withUnsafeMutableBufferPointer {
             LIBMTP_Create_Folder(device, $0.baseAddress, parent, storage)
         }
-        guard id != 0 else { throw failure("Could not create the destination folder.") }
+        guard id != 0 else { throw failure(L10n.text("Could not create the destination folder.")) }
         return id
     }
 
     private func validateName(_ name: String) throws {
         guard TransferName.isComponent(name), name.utf8.count <= 254 else {
-            throw USBError("The name must be a valid filename of at most 254 UTF-8 bytes.")
+            throw USBError(L10n.text("The name must be a valid filename of at most 254 UTF-8 bytes."))
         }
     }
 
     private func metadata(for object: UInt32) throws -> UnsafeMutablePointer<LIBMTP_file_t> {
         LIBMTP_Clear_Errorstack(device)
         guard let file = LIBMTP_Get_Filemetadata(device, object) else {
-            throw failure("Could not read object \(object). Refresh the folder to get current IDs.")
+            throw failure(L10n.text("Could not read object %@. Refresh the folder to get current IDs.", String(object)))
         }
         return file
     }

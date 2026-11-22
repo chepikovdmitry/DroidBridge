@@ -1,10 +1,12 @@
 # DroidBridge
 
-Нативное приложение для передачи файлов между macOS и Android по USB. Окно DroidBridge показывает папки Mac и телефона, позволяет копировать файлы и папки между ними и отображает очередь передач.
+[English](README.md) · [Русский](README.ru.md) · [Español](README.es.md) · [Français](README.fr.md) · [Deutsch](README.de.md) · [Português (Brasil)](README.pt-BR.md) · [日本語](README.ja.md) · [简体中文](README.zh-Hans.md)
 
-## Запуск приложения
+DroidBridge is a native macOS app for transferring files and folders between a Mac and an Android device over USB (MTP). It provides a two-pane browser, optional photo thumbnails and a transfer queue.
 
-Для локальной сборки нужны macOS 26, Xcode и Homebrew.
+## Build and run
+
+You need macOS 26, Xcode with the macOS 26 SDK and Homebrew. Local builds use the Homebrew libraries installed on your Mac. The project has been tested on Apple Silicon.
 
 ```sh
 brew install libmtp pkgconf
@@ -12,24 +14,27 @@ brew install libmtp pkgconf
 open .build/DroidBridge.app
 ```
 
-Разблокируй Android, подключи кабель и выбери «Передача файлов». Двойной щелчок открывает папку, ⌘O выбирает папку на Mac, ⌘R обновляет списки. Выделенные файлы и папки можно скопировать стрелками между панелями или перетаскиванием. При совпадении имён очередь предложит пропустить объект или сохранить копию с новым именем.
+## Connect and copy
 
-Сборка `.app` для локального запуска использует установленные на этом Mac библиотеки Homebrew.
+Unlock your Android device, connect it with a USB data cable and select **File transfer** in its USB options. Allow access if prompted. Close any other app using the same MTP device. USB debugging is unnecessary.
 
-## Сборка прототипа
+Double-click to open a folder. Use ⌘O to choose a Mac folder and ⌘R to refresh. Transfer the selected items using the arrows between the panes or by dragging them. If a name is already in use, you can skip the item or keep a renamed copy.
 
-Проверочная среда — Apple Silicon, macOS 26 и Swift 6. Для сборки нужны Xcode и Homebrew.
+## Language
+
+Open **DroidBridge → Settings** (⌘,) to choose a language or use the system language. English is the fallback.
+
+## Tests and USB diagnostic tool
 
 ```sh
-brew install libmtp pkgconf
 swift build
 swift test
 .build/debug/droidbridge-usb --help
 ```
 
-## Проверка с телефоном
+### Test with a phone
 
-Подключи один разблокированный Android-телефон кабелем с передачей данных. В настройках USB на телефоне выбери «Передача файлов» и подтверди запрос на доступ, если он появится. Закрой другие приложения, работающие с этим MTP-устройством.
+Connect one Android device in File transfer mode and close DroidBridge before running the USB diagnostic tool. Use the storage ID printed by `storages` and the folder ID printed by the first `ls` command. The IDs below are examples. Look up the IDs again after reconnecting.
 
 ```sh
 .build/debug/droidbridge-usb devices
@@ -38,9 +43,7 @@ swift test
 .build/debug/droidbridge-usb ls 65537 42
 ```
 
-В примере `65537` — идентификатор хранилища из `storages`, а `42` — идентификатор папки `Download` из первого `ls`. Подставь значения, выведенные твоим телефоном. После переподключения снова запроси идентификаторы.
-
-Для двусторонней проверки создай новый небольшой файл с уникальным именем, скопируй его на телефон и скачай под другим именем. Подставь идентификатор, напечатанный командой `push`, вместо `123`.
+To test a round trip, use a unique filename and replace `123` with the object ID printed by `push`. The two checksums should match.
 
 ```sh
 printf 'DroidBridge USB check\n' > droidbridge-usb-check.txt
@@ -49,6 +52,6 @@ printf 'DroidBridge USB check\n' > droidbridge-usb-check.txt
 shasum -a 256 droidbridge-usb-check.txt droidbridge-usb-returned.txt
 ```
 
-Обе контрольные суммы должны совпасть. Повтори с именем на кириллице и файлом больше 4 ГиБ, если хватает места. Во время передачи проверь отдельно Ctrl+C и отключение кабеля в обоих направлениях. При Ctrl+C скачивание заканчивает обмен по USB и удаляет временный файл. Начатая загрузка на телефон завершается штатно. На тестовом Samsung немедленное прерывание через libmtp оставляло MTP-сессию без ответа.
+For more coverage, repeat with a filename containing Unicode and a file larger than 4 GiB. Test Ctrl+C and a cable disconnect in both directions. On Ctrl+C, a download lets the USB exchange finish and removes the temporary file. An upload already underway is allowed to finish. Immediate cancellation through libmtp left the MTP session unresponsive on the Samsung test device.
 
-При ошибке скачивания прототип удаляет временную копию и сохраняет любой уже существующий файл по адресу назначения. Ошибка загрузки на телефон может оставить частичный файл. Перед повторной попыткой переподключи телефон, обнови список папки и проверь её содержимое. Если Samsung уже виден по USB, а хранилище остаётся недоступным, переключи «Передача фото» → «Передача файлов» на телефоне.
+Failed downloads remove the temporary copy and preserve an existing destination file. A failed upload may leave a partial file on the phone. Reconnect and refresh the destination folder to check its contents before retrying. If the Samsung is detected over USB but its storage is unavailable, try switching from Photo transfer back to File transfer.
