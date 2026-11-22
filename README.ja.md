@@ -6,6 +6,14 @@ DroidBridge は、Mac と Android デバイス間で USB（MTP）経由でファ
 
 ![Mac と Android のペインと転送の進行状況を表示する DroidBridge](docs/screenshots/droidbridge-browser.png)
 
+## ダウンロード
+
+以下の手順に従い、DroidBridge をソースからビルドすることをおすすめします。
+
+[ディスクイメージ](https://github.com/chepikovdmitry/DroidBridge/releases/tag/v0.2.0)は Apple Silicon と macOS 26 以降に対応しています。イメージを開いて DroidBridge を「アプリケーション」にドラッグしてください。このビルドは ad hoc 署名を使用しており、Apple の公証は受けていません。macOS が初回起動をブロックする場合があります。ダウンロード元を信頼できる場合は [Apple の手順](https://support.apple.com/en-us/102445)を参照してください。
+
+リリースにはチェックサムと同梱ライブラリのソースコードも含まれます。[配布条件とライセンス](docs/distribution.md)を参照してください。
+
 ## ビルドと起動
 
 macOS 26 以降が必要です。Apple Silicon でビルドを確認済みです。

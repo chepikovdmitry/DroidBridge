@@ -6,6 +6,14 @@ DroidBridge ist eine native macOS-App zum Übertragen von Dateien und Ordnern zw
 
 ![DroidBridge-Dateiansicht mit Mac- und Android-Bereichen sowie Transferfortschritt](docs/screenshots/droidbridge-browser.png)
 
+## Herunterladen
+
+Wir empfehlen, DroidBridge nach der folgenden Anleitung aus dem Quellcode zu bauen.
+
+Das [Festplattenimage](https://github.com/chepikovdmitry/DroidBridge/releases/tag/v0.2.0) ist für Apple Silicon und macOS 26 oder neuer gedacht. Öffne es und ziehe DroidBridge in den Ordner Programme. Der Build ist ad hoc signiert und von Apple nicht notarisiert. macOS kann den ersten Start blockieren. Wenn du dem Download vertraust, folge der [Anleitung von Apple](https://support.apple.com/en-us/102445).
+
+Der Release enthält auch Prüfsummen und den Quellcode der enthaltenen Bibliotheken. Siehe [Vertrieb und Lizenzen](docs/distribution.md).
+
 ## Bauen und starten
 
 Du benötigst macOS 26 oder neuer. Der Build wurde auf Apple Silicon getestet.

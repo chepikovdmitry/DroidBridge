@@ -6,6 +6,14 @@ DroidBridge 是一款 macOS 原生应用，可通过 USB（MTP）在 Mac 和 And
 
 ![DroidBridge 文件浏览窗口，显示 Mac 和 Android 两栏及传输进度](docs/screenshots/droidbridge-browser.png)
 
+## 下载
+
+建议按下方说明从源代码构建 DroidBridge。
+
+[磁盘映像](https://github.com/chepikovdmitry/DroidBridge/releases/tag/v0.2.0)适用于 Apple Silicon 和 macOS 26 或更高版本。打开映像后，将 DroidBridge 拖到“应用程序”。此构建使用 ad hoc 签名，未经 Apple 公证。macOS 可能阻止首次启动。如果你信任此下载，请参阅 [Apple 说明](https://support.apple.com/en-us/102445)。
+
+发布包还包含校验和与随附库的源代码。参阅[分发与许可证说明](docs/distribution.md)。
+
 ## 构建和运行
 
 需要 macOS 26 或更高版本。已在 Apple Silicon 上验证构建。

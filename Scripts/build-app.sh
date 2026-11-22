@@ -5,7 +5,7 @@ cd "$(dirname "$0")/.."
 source Scripts/version.env
 swift build --product DroidBridge "$@"
 binary_dir="$(swift build --show-bin-path "$@")"
-bundle="$PWD/.build/DroidBridge.app"
+bundle="${DROIDBRIDGE_APP_OUTPUT:-$PWD/.build/DroidBridge.app}"
 mkdir -p "$bundle/Contents/MacOS" "$bundle/Contents/Resources"
 staged_binary="$(mktemp "$bundle/Contents/MacOS/.DroidBridge.XXXXXX")"
 trap 'rm -f "$staged_binary"' EXIT

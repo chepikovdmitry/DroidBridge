@@ -6,6 +6,14 @@ DroidBridge — нативное приложение macOS для переда�
 
 ![Окно DroidBridge с панелями Mac и Android и прогрессом передачи](docs/screenshots/droidbridge-browser.png)
 
+## Скачать приложение
+
+Рекомендуем собрать DroidBridge из исходников по инструкции ниже.
+
+[Готовый образ диска](https://github.com/chepikovdmitry/DroidBridge/releases/tag/v0.2.0) поддерживает Apple Silicon и macOS 26 или новее. Откройте образ и перетащите DroidBridge в «Программы». У сборки локальная подпись ad hoc, без нотаризации Apple. macOS может заблокировать первый запуск. Если вы доверяете загрузке, следуйте [инструкции Apple](https://support.apple.com/en-us/102445).
+
+В релиз также входят контрольные суммы и исходники включённых библиотек. См. [условия распространения и лицензии](docs/distribution.md).
+
 ## Сборка и запуск
 
 Нужна macOS 26 или новее. Сборка проверена на Apple Silicon.
