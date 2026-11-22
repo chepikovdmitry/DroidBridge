@@ -61,6 +61,14 @@ DroidBridge 是一款 macOS 原生应用，可通过 USB（MTP）在 Mac 和 And
 
 ![DroidBridge 设置窗口，显示语言选项和版本](docs/screenshots/droidbridge-settings.png)
 
+## 问题排查
+
+- **找不到手机.** 解锁手机，选择文件传输（MTP），并用支持数据传输的 USB 线直连 Mac。关闭其他 MTP 应用，重新连接手机后按 ⌘R。
+- **存储空间无法访问.** 如果在三星手机上遇到此问题，请先切换到照片传输（PTP），再切回文件传输（MTP）。如果系统提示授权，请允许访问。
+- **传输卡住或中断.** 检查数据线、目标位置的可用空间，以及队列中是否有待处理的重名冲突。必要时重新连接并刷新。如果复制到手机失败，请重试前检查目标文件夹中是否留有未传完的文件。
+
+[报告问题](https://github.com/chepikovdmitry/DroidBridge/issues/new?template=bug-report.yml) · [报告漏洞](SECURITY.md) · [更新记录](CHANGELOG.md)
+
 ## 测试和 USB 诊断
 
 ```sh

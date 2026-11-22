@@ -61,6 +61,14 @@ Click the gear in the main window or press ⌘, to open **Settings**. Choose one
 
 ![DroidBridge settings with a language selector and version number](docs/screenshots/droidbridge-settings.png)
 
+## Troubleshooting
+
+- **Phone missing.** Unlock the phone, select File transfer (MTP), and try a USB data cable connected directly to the Mac. Quit other MTP apps, reconnect the phone, and press Refresh (⌘R).
+- **Storage unavailable.** On affected Samsung phones, switch to Photo transfer (PTP), then back to File transfer (MTP) and allow access if prompted.
+- **Transfer stalled or interrupted.** Check the cable, free space on the destination, and any pending name conflict in the transfer queue. Reconnect and refresh if needed. After a failed upload, check the phone's target folder for a partial file before retrying.
+
+[Report a bug](https://github.com/chepikovdmitry/DroidBridge/issues/new?template=bug-report.yml) · [Report a vulnerability](SECURITY.md) · [Changelog](CHANGELOG.md)
+
 ## Tests and USB diagnostic tool
 
 ```sh

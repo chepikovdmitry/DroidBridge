@@ -61,6 +61,14 @@ Klicke auf das Zahnrad oder drücke ⌘, für die **Einstellungen**. Wähle eine
 
 ![DroidBridge-Einstellungen mit Sprachauswahl und Versionsnummer](docs/screenshots/droidbridge-settings.png)
 
+## Fehlerbehebung
+
+- **Das Telefon fehlt.** Entsperre das Telefon, wähle Dateiübertragung (MTP) und stecke das USB-Datenkabel direkt am Mac ein. Beende andere MTP-Apps, verbinde das Telefon erneut und drücke ⌘R.
+- **Der Speicher ist nicht verfügbar.** Wechsle bei betroffenen Samsung-Geräten zur Fotoübertragung (PTP) und dann zurück zur Dateiübertragung (MTP). Erlaube den Zugriff, wenn du danach gefragt wirst.
+- **Die Übertragung hängt oder wurde unterbrochen.** Prüfe Kabel, freien Speicher am Ziel und offene Namenskonflikte in der Warteschlange. Verbinde das Telefon bei Bedarf erneut und aktualisiere die Ansicht. Suche nach einer Teildatei im Zielordner auf dem Telefon, bevor du eine fehlgeschlagene Übertragung wiederholst.
+
+[Fehler melden](https://github.com/chepikovdmitry/DroidBridge/issues/new?template=bug-report.yml) · [Sicherheitslücke melden](SECURITY.md) · [Änderungsverlauf](CHANGELOG.md)
+
 ## Tests und USB-Diagnose
 
 ```sh

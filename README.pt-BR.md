@@ -61,6 +61,14 @@ Clique na engrenagem ou pressione ⌘, para abrir os **Ajustes**. Escolha um dos
 
 ![Ajustes do DroidBridge com seletor de idioma e número da versão](docs/screenshots/droidbridge-settings.png)
 
+## Solução de problemas
+
+- **O telefone não aparece.** Desbloqueie o telefone, selecione Transferência de arquivos (MTP) e ligue o cabo de dados diretamente ao Mac. Feche outros apps MTP, reconecte o telefone e pressione ⌘R.
+- **O armazenamento está indisponível.** Nos aparelhos Samsung afetados, mude para Transferência de fotos (PTP), depois volte para Transferência de arquivos (MTP). Permita o acesso se solicitado.
+- **A transferência travou ou foi interrompida.** Confira o cabo, o espaço livre no destino e os conflitos de nomes na fila. Reconecte e atualize se necessário. Se a cópia para o telefone falhou, procure um arquivo parcial na pasta de destino antes de tentar novamente.
+
+[Relatar um erro](https://github.com/chepikovdmitry/DroidBridge/issues/new?template=bug-report.yml) · [Relatar uma vulnerabilidade](SECURITY.md) · [Histórico de alterações](CHANGELOG.md)
+
 ## Testes e diagnóstico USB
 
 ```sh

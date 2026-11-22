@@ -1,0 +1,63 @@
+name: Bug report
+description: Report a reproducible issue with DroidBridge.
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Check the [troubleshooting guide](https://github.com/chepikovdmitry/DroidBridge#troubleshooting) first.
+        For a security vulnerability, use the [security policy](https://github.com/chepikovdmitry/DroidBridge/security/policy).
+        Remove serial numbers, personal file names and paths, and account details from screenshots or logs.
+  - type: input
+    id: droidbridge-version
+    attributes:
+      label: DroidBridge version
+      description: Include the build number from Settings and say whether you used the DMG or built from source.
+      placeholder: 0.2.0 (2), DMG
+    validations:
+      required: true
+  - type: input
+    id: mac
+    attributes:
+      label: Mac model, chip and macOS version
+      placeholder: MacBook Air, M2, macOS 26.2
+    validations:
+      required: true
+  - type: input
+    id: android
+    attributes:
+      label: Phone model and Android version
+      description: Include the USB mode, if relevant. Enter N/A for issues that do not involve a phone.
+      placeholder: Galaxy S24, Android 16, File transfer (MTP)
+    validations:
+      required: true
+  - type: dropdown
+    id: operation
+    attributes:
+      label: Operation
+      options:
+        - Copying from Android to Mac
+        - Copying from Mac to Android
+        - Connecting or browsing the phone
+        - Installing or launching the app
+        - Other
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      description: List the steps in order. For transfer issues, include the approximate number and sizes of files.
+    validations:
+      required: true
+  - type: textarea
+    id: result
+    attributes:
+      label: Expected and actual behavior
+      description: Describe both. Include the exact error message if one appeared, with private details removed.
+    validations:
+      required: true
+  - type: textarea
+    id: attachments
+    attributes:
+      label: Screenshots or logs
+      description: Optional. Attach only material that is safe to share.
