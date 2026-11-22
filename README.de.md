@@ -4,25 +4,54 @@
 
 DroidBridge ist eine native macOS-App zum Übertragen von Dateien und Ordnern zwischen einem Mac und einem Android-Gerät über USB (MTP). Die App bietet eine Dateiansicht mit zwei Bereichen, optionale Fotovorschauen und eine Transferwarteschlange.
 
+![DroidBridge-Dateiansicht mit Mac- und Android-Bereichen sowie Transferfortschritt](docs/screenshots/droidbridge-browser.png)
+
 ## Bauen und starten
 
-Du benötigst macOS 26, Xcode mit dem macOS-26-SDK und Homebrew. Der lokale Build verwendet die auf deinem Mac installierten Homebrew-Bibliotheken. Das Projekt wurde auf Apple Silicon getestet.
+Du benötigst macOS 26 oder neuer. Der Build wurde auf Apple Silicon getestet.
 
-```sh
-brew install libmtp pkgconf
-./Scripts/build-app.sh -c release
-open .build/DroidBridge.app
-```
+1. Installiere die vollständige Xcode-App aus dem [Mac App Store](https://apps.apple.com/app/xcode/id497799835) oder über [Apple Developer Downloads](https://developer.apple.com/download/all/). Verwende Xcode 26 oder neuer mit dem macOS-26-SDK oder neuer. Öffne Xcode einmal und schließe die Ersteinrichtung ab.
+
+2. Prüfe im Terminal das aktive Xcode und den SDK-Stand. Falls das Terminal nur die separaten Command Line Tools oder ein älteres Xcode verwendet, wähle zuerst die vollständige App aus. Passe bei Bedarf den Pfad an.
+
+   ```sh
+   # Only if you need to select Xcode
+   sudo xcode-select --switch /Applications/Xcode.app
+   xcodebuild -version
+   xcrun --sdk macosx --show-sdk-version
+   ```
+
+3. Falls Homebrew fehlt, verwende den Installer von [brew.sh](https://brew.sh/). Folge den Hinweisen unter **Next steps**, um Homebrew in der Shell verfügbar zu machen, und prüfe es mit `brew --version`.
+
+   ```sh
+   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+   ```
+
+4. Klone das Repository und baue die App. Wenn du eine ZIP-Datei heruntergeladen hast, entpacke sie, öffne den Projektordner im Terminal und beginne mit `brew install`.
+
+   ```sh
+   git clone https://github.com/chepikovdmitry/DroidBridge.git
+   cd DroidBridge
+   brew install libmtp pkgconf
+   ./Scripts/build-app.sh -c release
+   open .build/DroidBridge.app
+   ```
+
+Die App erscheint unter `.build/DroidBridge.app` und verwendet die auf diesem Mac installierten Homebrew-Bibliotheken.
 
 ## Verbinden und kopieren
 
-Entsperre das Android-Gerät, verbinde es mit einem USB-Datenkabel und wähle in den USB-Einstellungen **Dateiübertragung**. Erlaube den Zugriff, wenn du danach gefragt wirst. Schließe andere Apps, die dasselbe MTP-Gerät verwenden. USB-Debugging ist nicht erforderlich.
-
-Öffne Ordner per Doppelklick. Mit ⌘O wählst du einen Mac-Ordner, mit ⌘R aktualisierst du die Listen. Übertrage die ausgewählten Elemente mit den Pfeilen zwischen den Bereichen oder per Drag-and-drop. Bei Namenskonflikten kannst du das Element überspringen oder eine umbenannte Kopie behalten.
+1. Entsperre Android, verbinde das Gerät über ein USB-Datenkabel und wähle **Dateiübertragung**. Erlaube den Zugriff, wenn du danach gefragt wirst. Schließe andere Apps, die dasselbe MTP-Gerät verwenden. USB-Debugging ist nicht erforderlich.
+2. Links siehst du den Mac. Mit **Ordner wählen** (⌘O) legst du die lokale Quelle oder das Ziel fest. Rechts siehst du Android. Öffne Ordner per Doppelklick, gehe per Pfeil nach oben und sortiere durch Klick auf einen Spaltenkopf. Mit ⌘R aktualisierst du die Listen.
+3. Markiere Dateien oder Ordner. Klicke auf **←** für Android zum Mac oder auf **→** für Mac zu Android. Du kannst die Auswahl auch in den Zielbereich ziehen.
+4. Die **Übertragungswarteschlange** zeigt den laufenden Transfer mit Fortschritt oben an. Klappe sie auf, um anstehende und abgeschlossene Transfers zu sehen. Falls eine Datei auf dem Mac bereits vorhanden ist, überspringe sie oder behalte eine umbenannte Kopie.
+5. Aktiviere die Vorschau im Android-Bereich für Miniaturansichten sichtbarer Fotos und Videos.
 
 ## Sprache
 
-Öffne **DroidBridge → Einstellungen** (⌘,), um eine Sprache auszuwählen oder die Systemsprache zu verwenden. Als Ausweichsprache dient Englisch.
+Klicke auf das Zahnrad oder drücke ⌘, für die **Einstellungen**. Wähle eine der acht Sprachen oder die Systemsprache. Die Änderung gilt sofort. Als Ausweichsprache dient Englisch.
+
+![DroidBridge-Einstellungen mit Sprachauswahl und Versionsnummer](docs/screenshots/droidbridge-settings.png)
 
 ## Tests und USB-Diagnose
 

@@ -4,25 +4,54 @@
 
 DroidBridge is a native macOS app for transferring files and folders between a Mac and an Android device over USB (MTP). It provides a two-pane browser, optional photo thumbnails and a transfer queue.
 
+![DroidBridge file browser with Mac and Android panes and transfer progress](docs/screenshots/droidbridge-browser.png)
+
 ## Build and run
 
-You need macOS 26, Xcode with the macOS 26 SDK and Homebrew. Local builds use the Homebrew libraries installed on your Mac. The project has been tested on Apple Silicon.
+You need macOS 26 or later. The build has been tested on Apple Silicon.
 
-```sh
-brew install libmtp pkgconf
-./Scripts/build-app.sh -c release
-open .build/DroidBridge.app
-```
+1. Install the full Xcode app from the [Mac App Store](https://apps.apple.com/app/xcode/id497799835) or [Apple Developer Downloads](https://developer.apple.com/download/all/). Choose Xcode 26 or later with a macOS 26 or newer SDK. Open Xcode once and complete its first-launch setup.
+
+2. In Terminal, check the selected Xcode and SDK. If Terminal is using the standalone Command Line Tools or an older Xcode, select the full Xcode app first. Adjust the path if you installed Xcode elsewhere.
+
+   ```sh
+   # Only if you need to select Xcode
+   sudo xcode-select --switch /Applications/Xcode.app
+   xcodebuild -version
+   xcrun --sdk macosx --show-sdk-version
+   ```
+
+3. If Homebrew is missing, run the installer from [brew.sh](https://brew.sh/). Follow its **Next steps** to add Homebrew to your shell, then check that `brew --version` works.
+
+   ```sh
+   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+   ```
+
+4. Clone the repository and build the app. If you downloaded a ZIP, extract it and open its folder in Terminal, then start at `brew install`.
+
+   ```sh
+   git clone https://github.com/chepikovdmitry/DroidBridge.git
+   cd DroidBridge
+   brew install libmtp pkgconf
+   ./Scripts/build-app.sh -c release
+   open .build/DroidBridge.app
+   ```
+
+The app is built locally at `.build/DroidBridge.app` and uses the Homebrew libraries installed on that Mac.
 
 ## Connect and copy
 
-Unlock your Android device, connect it with a USB data cable and select **File transfer** in its USB options. Allow access if prompted. Close any other app using the same MTP device. USB debugging is unnecessary.
-
-Double-click to open a folder. Use ⌘O to choose a Mac folder and ⌘R to refresh. Transfer the selected items using the arrows between the panes or by dragging them. If a name is already in use, you can skip the item or keep a renamed copy.
+1. Unlock Android, connect it with a USB data cable, and choose **File transfer** in the phone’s USB options. Allow access if prompted. Close other apps that are using the same MTP device. USB debugging is unnecessary.
+2. The left pane shows the Mac. Click **Choose Folder** (⌘O) to set the local source or destination. The right pane shows Android storage. Double-click a folder to open it, click the up arrow to go back one level, and click a column heading to sort. Use the refresh button (⌘R) to reload the lists.
+3. Select files or folders. Click **←** to copy from Android to the Mac, or **→** to copy from the Mac to Android. You can also drag the selection into the destination pane.
+4. The **Transfer Queue** keeps the current item and its progress at the top. Open the queue to see pending and completed items. If a file already exists on the Mac, choose **Skip** or **Keep Both**.
+5. Use **Previews** in the Android pane to load thumbnails for visible photos and videos.
 
 ## Language
 
-Open **DroidBridge → Settings** (⌘,) to choose a language or use the system language. English is the fallback.
+Click the gear in the main window or press ⌘, to open **Settings**. Choose one of eight interface languages or follow the system language. The change takes effect immediately. English is the fallback.
+
+![DroidBridge settings with a language selector and version number](docs/screenshots/droidbridge-settings.png)
 
 ## Tests and USB diagnostic tool
 
