@@ -10,7 +10,7 @@ DroidBridge 是一款 macOS 原生应用，可通过 USB（MTP）在 Mac 和 And
 
 建议按下方说明从源代码构建 DroidBridge。
 
-[磁盘映像](https://github.com/chepikovdmitry/DroidBridge/releases/tag/v0.2.0)适用于 Apple Silicon 和 macOS 26 或更高版本。打开映像后，将 DroidBridge 拖到“应用程序”。此构建使用 ad hoc 签名，未经 Apple 公证。macOS 可能阻止首次启动。如果你信任此下载，请参阅 [Apple 说明](https://support.apple.com/en-us/102445)。
+[磁盘映像](https://github.com/chepikaudzmitry/DroidBridge/releases/tag/v0.2.0)适用于 Apple Silicon 和 macOS 26 或更高版本。打开映像后，将 DroidBridge 拖到“应用程序”。此构建使用 ad hoc 签名，未经 Apple 公证。macOS 可能阻止首次启动。如果你信任此下载，请参阅 [Apple 说明](https://support.apple.com/en-us/102445)。
 
 发布包还包含校验和与随附库的源代码。参阅[分发与许可证说明](docs/distribution.md)。
 
@@ -38,7 +38,7 @@ DroidBridge 是一款 macOS 原生应用，可通过 USB（MTP）在 Mac 和 And
 4. 克隆仓库并构建应用。如果下载的是 ZIP，请解压，在终端中打开项目目录，然后从 `brew install` 开始执行。
 
    ```sh
-   git clone https://github.com/chepikovdmitry/DroidBridge.git
+   git clone https://github.com/chepikaudzmitry/DroidBridge.git
    cd DroidBridge
    brew install libmtp pkgconf
    ./Scripts/build-app.sh -c release
@@ -67,7 +67,7 @@ DroidBridge 是一款 macOS 原生应用，可通过 USB（MTP）在 Mac 和 And
 - **存储空间无法访问.** 如果在三星手机上遇到此问题，请先切换到照片传输（PTP），再切回文件传输（MTP）。如果系统提示授权，请允许访问。
 - **传输卡住或中断.** 检查数据线、目标位置的可用空间，以及队列中是否有待处理的重名冲突。必要时重新连接并刷新。如果复制到手机失败，请重试前检查目标文件夹中是否留有未传完的文件。
 
-[报告问题](https://github.com/chepikovdmitry/DroidBridge/issues/new?template=bug-report.yml) · [报告漏洞](SECURITY.md) · [更新记录](CHANGELOG.md)
+[报告问题](https://github.com/chepikaudzmitry/DroidBridge/issues/new?template=bug-report.yml) · [报告漏洞](SECURITY.md) · [更新记录](CHANGELOG.md)
 
 ## 测试和 USB 诊断
 

@@ -4,8 +4,8 @@ body:
   - type: markdown
     attributes:
       value: |
-        Check the [troubleshooting guide](https://github.com/chepikovdmitry/DroidBridge#troubleshooting) first.
-        For a security vulnerability, use the [security policy](https://github.com/chepikovdmitry/DroidBridge/security/policy).
+        Check the [troubleshooting guide](https://github.com/chepikaudzmitry/DroidBridge#troubleshooting) first.
+        For a security vulnerability, use the [security policy](https://github.com/chepikaudzmitry/DroidBridge/security/policy).
         Remove serial numbers, personal file names and paths, and account details from screenshots or logs.
   - type: input
     id: droidbridge-version

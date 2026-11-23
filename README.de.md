@@ -10,7 +10,7 @@ DroidBridge ist eine native macOS-App zum Übertragen von Dateien und Ordnern zw
 
 Wir empfehlen, DroidBridge nach der folgenden Anleitung aus dem Quellcode zu bauen.
 
-Das [Festplattenimage](https://github.com/chepikovdmitry/DroidBridge/releases/tag/v0.2.0) ist für Apple Silicon und macOS 26 oder neuer gedacht. Öffne es und ziehe DroidBridge in den Ordner Programme. Der Build ist ad hoc signiert und von Apple nicht notarisiert. macOS kann den ersten Start blockieren. Wenn du dem Download vertraust, folge der [Anleitung von Apple](https://support.apple.com/en-us/102445).
+Das [Festplattenimage](https://github.com/chepikaudzmitry/DroidBridge/releases/tag/v0.2.0) ist für Apple Silicon und macOS 26 oder neuer gedacht. Öffne es und ziehe DroidBridge in den Ordner Programme. Der Build ist ad hoc signiert und von Apple nicht notarisiert. macOS kann den ersten Start blockieren. Wenn du dem Download vertraust, folge der [Anleitung von Apple](https://support.apple.com/en-us/102445).
 
 Der Release enthält auch Prüfsummen und den Quellcode der enthaltenen Bibliotheken. Siehe [Vertrieb und Lizenzen](docs/distribution.md).
 
@@ -38,7 +38,7 @@ Du benötigst macOS 26 oder neuer. Der Build wurde auf Apple Silicon getestet.
 4. Klone das Repository und baue die App. Wenn du eine ZIP-Datei heruntergeladen hast, entpacke sie, öffne den Projektordner im Terminal und beginne mit `brew install`.
 
    ```sh
-   git clone https://github.com/chepikovdmitry/DroidBridge.git
+   git clone https://github.com/chepikaudzmitry/DroidBridge.git
    cd DroidBridge
    brew install libmtp pkgconf
    ./Scripts/build-app.sh -c release
@@ -67,7 +67,7 @@ Klicke auf das Zahnrad oder drücke ⌘, für die **Einstellungen**. Wähle eine
 - **Der Speicher ist nicht verfügbar.** Wechsle bei betroffenen Samsung-Geräten zur Fotoübertragung (PTP) und dann zurück zur Dateiübertragung (MTP). Erlaube den Zugriff, wenn du danach gefragt wirst.
 - **Die Übertragung hängt oder wurde unterbrochen.** Prüfe Kabel, freien Speicher am Ziel und offene Namenskonflikte in der Warteschlange. Verbinde das Telefon bei Bedarf erneut und aktualisiere die Ansicht. Suche nach einer Teildatei im Zielordner auf dem Telefon, bevor du eine fehlgeschlagene Übertragung wiederholst.
 
-[Fehler melden](https://github.com/chepikovdmitry/DroidBridge/issues/new?template=bug-report.yml) · [Sicherheitslücke melden](SECURITY.md) · [Änderungsverlauf](CHANGELOG.md)
+[Fehler melden](https://github.com/chepikaudzmitry/DroidBridge/issues/new?template=bug-report.yml) · [Sicherheitslücke melden](SECURITY.md) · [Änderungsverlauf](CHANGELOG.md)
 
 ## Tests und USB-Diagnose
 

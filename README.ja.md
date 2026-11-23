@@ -10,7 +10,7 @@ DroidBridge は、Mac と Android デバイス間で USB（MTP）経由でファ
 
 以下の手順に従い、DroidBridge をソースからビルドすることをおすすめします。
 
-[ディスクイメージ](https://github.com/chepikovdmitry/DroidBridge/releases/tag/v0.2.0)は Apple Silicon と macOS 26 以降に対応しています。イメージを開いて DroidBridge を「アプリケーション」にドラッグしてください。このビルドは ad hoc 署名を使用しており、Apple の公証は受けていません。macOS が初回起動をブロックする場合があります。ダウンロード元を信頼できる場合は [Apple の手順](https://support.apple.com/en-us/102445)を参照してください。
+[ディスクイメージ](https://github.com/chepikaudzmitry/DroidBridge/releases/tag/v0.2.0)は Apple Silicon と macOS 26 以降に対応しています。イメージを開いて DroidBridge を「アプリケーション」にドラッグしてください。このビルドは ad hoc 署名を使用しており、Apple の公証は受けていません。macOS が初回起動をブロックする場合があります。ダウンロード元を信頼できる場合は [Apple の手順](https://support.apple.com/en-us/102445)を参照してください。
 
 リリースにはチェックサムと同梱ライブラリのソースコードも含まれます。[配布条件とライセンス](docs/distribution.md)を参照してください。
 
@@ -38,7 +38,7 @@ macOS 26 以降が必要です。Apple Silicon でビルドを確認済みです
 4. リポジトリをクローンしてビルドします。ZIP をダウンロードした場合は展開し、ターミナルでそのフォルダを開いて `brew install` から実行します。
 
    ```sh
-   git clone https://github.com/chepikovdmitry/DroidBridge.git
+   git clone https://github.com/chepikaudzmitry/DroidBridge.git
    cd DroidBridge
    brew install libmtp pkgconf
    ./Scripts/build-app.sh -c release
@@ -67,7 +67,7 @@ macOS 26 以降が必要です。Apple Silicon でビルドを確認済みです
 - **ストレージを開けない場合.** 該当する Samsung の端末では、写真転送（PTP）に切り替えてからファイル転送（MTP）に戻し、確認が表示されたらアクセスを許可します。
 - **転送が止まった場合.** ケーブル、転送先の空き容量、およびキューに保留中の同名ファイルの確認がないかを調べます。必要に応じて再接続して更新します。端末へのコピーが失敗した場合は、再試行前に転送先に途中までのファイルが残っていないか確認します。
 
-[不具合を報告](https://github.com/chepikovdmitry/DroidBridge/issues/new?template=bug-report.yml) · [脆弱性を報告](SECURITY.md) · [変更履歴](CHANGELOG.md)
+[不具合を報告](https://github.com/chepikaudzmitry/DroidBridge/issues/new?template=bug-report.yml) · [脆弱性を報告](SECURITY.md) · [変更履歴](CHANGELOG.md)
 
 ## テストと USB 診断
 

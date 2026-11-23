@@ -5,7 +5,7 @@
 - Added a bug report form, security reporting instructions, and troubleshooting steps in the README.
 - Added automated Swift tests and app bundle verification on macOS 26 and Apple Silicon.
 
-## [0.2.0](https://github.com/chepikovdmitry/DroidBridge/releases/tag/v0.2.0) — 2026-11-23
+## [0.2.0](https://github.com/chepikaudzmitry/DroidBridge/releases/tag/v0.2.0) — 2026-11-23
 
 First packaged preview for macOS 26 or later on Apple Silicon.
 

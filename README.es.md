@@ -10,7 +10,7 @@ DroidBridge es una aplicación nativa de macOS para transferir archivos y carpet
 
 Recomendamos compilar DroidBridge desde el código fuente siguiendo las instrucciones de abajo.
 
-La [imagen de disco](https://github.com/chepikovdmitry/DroidBridge/releases/tag/v0.2.0) es para Apple Silicon y macOS 26 o posterior. Ábrela y arrastra DroidBridge a Aplicaciones. La compilación tiene una firma ad hoc y carece de notarización de Apple. macOS puede bloquear el primer arranque. Si confías en la descarga, consulta las [instrucciones de Apple](https://support.apple.com/en-us/102445).
+La [imagen de disco](https://github.com/chepikaudzmitry/DroidBridge/releases/tag/v0.2.0) es para Apple Silicon y macOS 26 o posterior. Ábrela y arrastra DroidBridge a Aplicaciones. La compilación tiene una firma ad hoc y carece de notarización de Apple. macOS puede bloquear el primer arranque. Si confías en la descarga, consulta las [instrucciones de Apple](https://support.apple.com/en-us/102445).
 
 La versión incluye sumas de comprobación y el código fuente de las bibliotecas incluidas. Consulta los [detalles de distribución y licencias](docs/distribution.md).
 
@@ -38,7 +38,7 @@ Necesitas macOS 26 o posterior. La compilación se ha probado en Apple Silicon.
 4. Clona el repositorio y compila la aplicación. Si descargaste un ZIP, extráelo, abre su carpeta en Terminal y empieza por `brew install`.
 
    ```sh
-   git clone https://github.com/chepikovdmitry/DroidBridge.git
+   git clone https://github.com/chepikaudzmitry/DroidBridge.git
    cd DroidBridge
    brew install libmtp pkgconf
    ./Scripts/build-app.sh -c release
@@ -67,7 +67,7 @@ Pulsa el engranaje o ⌘, para abrir **Ajustes**. Puedes elegir entre ocho idiom
 - **El almacenamiento no está disponible.** Si ocurre en un Samsung, cambia a Transferencia de fotos (PTP) y luego vuelve a Transferencia de archivos (MTP). Autoriza el acceso si se solicita.
 - **La transferencia se detuvo.** Revisa el cable, el espacio libre de destino y si hay un conflicto de nombres pendiente en la cola. Si es necesario, reconecta y actualiza. Si falló una copia al teléfono, revisa si quedó un archivo parcial antes de reintentar.
 
-[Informar de un error](https://github.com/chepikovdmitry/DroidBridge/issues/new?template=bug-report.yml) · [Informar de una vulnerabilidad](SECURITY.md) · [Historial de cambios](CHANGELOG.md)
+[Informar de un error](https://github.com/chepikaudzmitry/DroidBridge/issues/new?template=bug-report.yml) · [Informar de una vulnerabilidad](SECURITY.md) · [Historial de cambios](CHANGELOG.md)
 
 ## Pruebas y diagnóstico USB
 

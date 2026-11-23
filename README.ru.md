@@ -10,7 +10,7 @@ DroidBridge — нативное приложение macOS для переда�
 
 Рекомендуем собрать DroidBridge из исходников по инструкции ниже.
 
-[Готовый образ диска](https://github.com/chepikovdmitry/DroidBridge/releases/tag/v0.2.0) поддерживает Apple Silicon и macOS 26 или новее. Откройте образ и перетащите DroidBridge в «Программы». У сборки локальная подпись ad hoc, без нотаризации Apple. macOS может заблокировать первый запуск. Если вы доверяете загрузке, следуйте [инструкции Apple](https://support.apple.com/en-us/102445).
+[Готовый образ диска](https://github.com/chepikaudzmitry/DroidBridge/releases/tag/v0.2.0) поддерживает Apple Silicon и macOS 26 или новее. Откройте образ и перетащите DroidBridge в «Программы». У сборки локальная подпись ad hoc, без нотаризации Apple. macOS может заблокировать первый запуск. Если вы доверяете загрузке, следуйте [инструкции Apple](https://support.apple.com/en-us/102445).
 
 В релиз также входят контрольные суммы и исходники включённых библиотек. См. [условия распространения и лицензии](docs/distribution.md).
 
@@ -38,7 +38,7 @@ DroidBridge — нативное приложение macOS для переда�
 4. Клонируйте репозиторий и соберите приложение. Если вы скачали ZIP, распакуйте его, откройте папку проекта в Терминале и начните с `brew install`.
 
    ```sh
-   git clone https://github.com/chepikovdmitry/DroidBridge.git
+   git clone https://github.com/chepikaudzmitry/DroidBridge.git
    cd DroidBridge
    brew install libmtp pkgconf
    ./Scripts/build-app.sh -c release
@@ -67,7 +67,7 @@ DroidBridge — нативное приложение macOS для переда�
 - **Хранилище недоступно.** Если это произошло на Samsung, переключите USB в режим «Передача фото (PTP)», затем обратно в «Передача файлов (MTP)» и подтвердите доступ при запросе.
 - **Копирование зависло или прервалось.** Проверьте кабель, свободное место в папке назначения и запросы о совпадении имён в очереди. При необходимости переподключите телефон и обновите список. Если не удалось скопировать файл на телефон, проверьте папку назначения на наличие частичного файла перед повтором.
 
-[Сообщить об ошибке](https://github.com/chepikovdmitry/DroidBridge/issues/new?template=bug-report.yml) · [Сообщить об уязвимости](SECURITY.md) · [История изменений](CHANGELOG.md)
+[Сообщить об ошибке](https://github.com/chepikaudzmitry/DroidBridge/issues/new?template=bug-report.yml) · [Сообщить об уязвимости](SECURITY.md) · [История изменений](CHANGELOG.md)
 
 ## Тесты и диагностика USB
 

@@ -12,7 +12,7 @@ and in `DroidBridge.app/Contents/Resources/Licenses/`.
 | [libusb](https://libusb.info/) | 1.0.30 | `libusb-1.0.30.tar.bz2` | `fea36f34f9156400209595e300840767ab1a385ede1dc7ee893015aea9c6dbaf` |
 
 Download the corresponding-source ZIP next to the disk image on
-[GitHub Releases](https://github.com/chepikovdmitry/DroidBridge/releases).
+[GitHub Releases](https://github.com/chepikaudzmitry/DroidBridge/releases).
 It contains the complete DroidBridge source for the release, the upstream
 library archives in `ThirdParty/`, and the Homebrew build recipes and their
 BSD 2-Clause license. The packaged dylibs were built by Homebrew

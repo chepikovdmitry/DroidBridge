@@ -10,7 +10,7 @@ DroidBridge est une application native pour macOS qui transfère des fichiers et
 
 Nous recommandons de compiler DroidBridge depuis les sources en suivant les instructions ci-dessous.
 
-L’[image disque](https://github.com/chepikovdmitry/DroidBridge/releases/tag/v0.2.0) est destinée à Apple Silicon et à macOS 26 ou une version ultérieure. Ouvrez-la et faites glisser DroidBridge dans Applications. Cette version a une signature ad hoc et n’a pas été notariée par Apple. macOS peut bloquer le premier lancement. Si vous faites confiance au téléchargement, suivez les [instructions d’Apple](https://support.apple.com/en-us/102445).
+L’[image disque](https://github.com/chepikaudzmitry/DroidBridge/releases/tag/v0.2.0) est destinée à Apple Silicon et à macOS 26 ou une version ultérieure. Ouvrez-la et faites glisser DroidBridge dans Applications. Cette version a une signature ad hoc et n’a pas été notariée par Apple. macOS peut bloquer le premier lancement. Si vous faites confiance au téléchargement, suivez les [instructions d’Apple](https://support.apple.com/en-us/102445).
 
 La version inclut également des sommes de contrôle et les sources des bibliothèques fournies. Consultez les [conditions de distribution et les licences](docs/distribution.md).
 
@@ -38,7 +38,7 @@ Il faut macOS 26 ou une version ultérieure. La compilation a été testée sur 
 4. Clonez le dépôt et compilez l’application. Si vous avez téléchargé un ZIP, décompressez-le, ouvrez son dossier dans Terminal et commencez par `brew install`.
 
    ```sh
-   git clone https://github.com/chepikovdmitry/DroidBridge.git
+   git clone https://github.com/chepikaudzmitry/DroidBridge.git
    cd DroidBridge
    brew install libmtp pkgconf
    ./Scripts/build-app.sh -c release
@@ -67,7 +67,7 @@ Cliquez sur l’engrenage ou appuyez sur ⌘, pour ouvrir les **Réglages**. Cho
 - **Le stockage est inaccessible.** Sur les Samsung concernés, passez en mode Transfert de photos (PTP), puis revenez au transfert de fichiers (MTP). Autorisez l’accès si nécessaire.
 - **Le transfert s’est arrêté.** Vérifiez le câble, l’espace disponible à destination et les conflits de noms en attente. Rebranchez le téléphone et actualisez si nécessaire. Après un échec de copie vers le téléphone, vérifiez si un fichier partiel est resté dans le dossier cible.
 
-[Signaler un bogue](https://github.com/chepikovdmitry/DroidBridge/issues/new?template=bug-report.yml) · [Signaler une vulnérabilité](SECURITY.md) · [Historique des changements](CHANGELOG.md)
+[Signaler un bogue](https://github.com/chepikaudzmitry/DroidBridge/issues/new?template=bug-report.yml) · [Signaler une vulnérabilité](SECURITY.md) · [Historique des changements](CHANGELOG.md)
 
 ## Tests et diagnostic USB
 

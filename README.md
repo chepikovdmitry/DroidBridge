@@ -10,7 +10,7 @@ DroidBridge is a native macOS app for transferring files and folders between a M
 
 We recommend building DroidBridge from source using the instructions below.
 
-The [ready-built disk image](https://github.com/chepikovdmitry/DroidBridge/releases/tag/v0.2.0) supports Apple Silicon and macOS 26 or later. Open it and drag DroidBridge to Applications. The build uses an ad hoc signature and has no Apple notarization. macOS may block the first launch. If you trust the download, follow [Apple’s first-launch instructions](https://support.apple.com/en-us/102445).
+The [ready-built disk image](https://github.com/chepikaudzmitry/DroidBridge/releases/tag/v0.2.0) supports Apple Silicon and macOS 26 or later. Open it and drag DroidBridge to Applications. The build uses an ad hoc signature and has no Apple notarization. macOS may block the first launch. If you trust the download, follow [Apple’s first-launch instructions](https://support.apple.com/en-us/102445).
 
 The release also includes checksums and the corresponding source for the bundled libraries. See [distribution and license details](docs/distribution.md).
 
@@ -38,7 +38,7 @@ You need macOS 26 or later. The build has been tested on Apple Silicon.
 4. Clone the repository and build the app. If you downloaded a ZIP, extract it and open its folder in Terminal, then start at `brew install`.
 
    ```sh
-   git clone https://github.com/chepikovdmitry/DroidBridge.git
+   git clone https://github.com/chepikaudzmitry/DroidBridge.git
    cd DroidBridge
    brew install libmtp pkgconf
    ./Scripts/build-app.sh -c release
@@ -67,7 +67,7 @@ Click the gear in the main window or press ⌘, to open **Settings**. Choose one
 - **Storage unavailable.** On affected Samsung phones, switch to Photo transfer (PTP), then back to File transfer (MTP) and allow access if prompted.
 - **Transfer stalled or interrupted.** Check the cable, free space on the destination, and any pending name conflict in the transfer queue. Reconnect and refresh if needed. After a failed upload, check the phone's target folder for a partial file before retrying.
 
-[Report a bug](https://github.com/chepikovdmitry/DroidBridge/issues/new?template=bug-report.yml) · [Report a vulnerability](SECURITY.md) · [Changelog](CHANGELOG.md)
+[Report a bug](https://github.com/chepikaudzmitry/DroidBridge/issues/new?template=bug-report.yml) · [Report a vulnerability](SECURITY.md) · [Changelog](CHANGELOG.md)
 
 ## Tests and USB diagnostic tool
 
